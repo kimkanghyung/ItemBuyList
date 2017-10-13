@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/buylist"
+        android:icon="@drawable/ic_add_shopping_cart_white_24dp"
+        android:title="장바구니" />
+    <item
+        android:id="@+id/boughtlist"
+        android:icon="@drawable/ic_shopping_cart_white_24dp"
+        android:title="구매내역" />
+    <item
+        android:id="@+id/nav_camera"
+        android:icon="@drawable/ic_photo_camera_white_24dp"
+        android:title="카메라"
+        />
+    <item
+        android:id="@+id/receipt_list"
+        android:icon="@drawable/ic_receipt_white_24dp"
+        android:title="영수증" />
+</menu>

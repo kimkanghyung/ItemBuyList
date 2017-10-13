@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">ItemBuyList</string>
+    <string name="title_name">오늘은 모사지?</string>
+
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+
+    <string name="action_settings">Settings</string>
+</resources>

@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <group android:checkableBehavior="single"
+            >
+        <item
+            android:id="@+id/buylist"
+            android:icon="@drawable/ic_add_shopping_cart_black_24dp"
+            android:title="장바구니" />
+        <item
+            android:id="@+id/boughtlist"
+            android:icon="@drawable/ic_shopping_cart_black_24dp"
+            android:title="구매내역" />
+        <item
+            android:id="@+id/nav_camera"
+            android:icon="@drawable/ic_menu_camera"
+            android:title="카메라" />
+        <item
+            android:id="@+id/receipt_list"
+            android:icon="@drawable/ic_receipt_black_24dp"
+            android:title="영수증" />
+        <item
+            android:id="@+id/favoritebuylist"
+            android:icon="@drawable/ic_stars_black_24dp"
+            android:title="즐겨찾기" />
+        <item
+            android:id="@+id/boughtlistgraph"
+            android:icon="@drawable/ic_insert_chart_black_24dp"
+            android:title="지출그래프" />
+    </group>
+
+    <item android:title="Contact Us">
+        <menu>
+            <item
+                android:id="@+id/nav_send"
+                android:icon="@drawable/ic_contact_mail_black_24dp"
+                android:title="문의사항" />
+        </menu>
+    </item>
+
+</menu>

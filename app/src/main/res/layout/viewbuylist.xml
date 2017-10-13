@@ -1,0 +1,196 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+android:layout_width="match_parent"
+android:layout_height="match_parent" android:background="?android:attr/colorBackground"
+android:orientation="vertical">
+    <!--구매장소/구매물품-->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginTop="5dp">
+        <Spinner
+            android:layout_width="150dp"
+            android:layout_height="30dp"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:id="@+id/spinnerplace"
+            android:layout_marginRight="5dp"
+            android:background="@drawable/spinnerbackground"
+            android:textStyle="bold"
+            />
+        <Spinner
+            android:layout_width="match_parent"
+            android:layout_height="30dp"
+            android:layout_weight="1"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:id="@+id/spinner"
+            android:layout_marginRight="5dp"
+            android:background="@drawable/spinnerbackground"
+            android:textStyle="bold"
+            />
+        <Button
+            android:layout_height="24dp"
+            android:layout_width="24dp"
+            android:layout_gravity="center"
+            android:textColor= "#7EC0EE"
+            android:background="@drawable/ic_add_box_black_24dp"
+            android:layout_marginRight="5dp"
+            android:id="@+id/buylistaddbt" />
+    </LinearLayout>
+    <!--구매일자/총계-->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="35dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:paddingBottom="5dp">
+        <!--구매일자-->
+        <TextView
+            android:layout_width="50dp"
+            android:layout_height="30dp"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:text="일자"
+            android:textColor="@color/color_tabHeaderText"
+            android:textStyle="bold"
+            android:background="@drawable/pop_dtltexttitle"/>
+        <TextView
+            android:id="@+id/dateedit"
+            android:layout_width="100dp"
+            android:layout_height="30dp"
+            android:layout_gravity="center"
+            android:layout_marginRight="5dp"
+            android:gravity="center"
+            android:inputType="number"
+            android:textColor="@color/color_tabHeaderText"
+            android:background="@drawable/pop_dtltextctt"/>
+        <!--총계-->
+        <TextView
+            android:layout_width="50dp"
+            android:layout_height="30dp"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:text="총계"
+            android:textColor="@color/color_tabHeaderText"
+            android:textStyle="bold"
+            android:background="@drawable/pop_dtltexttitle"/>
+        <TextView
+            android:id="@+id/sumtext"
+            android:layout_width="wrap_content"
+            android:layout_height="30dp"
+            android:layout_weight="1"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:textColor="@color/color_tabHeaderText"
+            android:background="@drawable/pop_dtltextctt"/>
+    </LinearLayout>
+
+
+    <!--장바구니목록-->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="fill_parent"
+        android:background="@drawable/com_rounded_corner"
+        android:layout_weight="1"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp">
+        <LinearLayout
+            android:id="@+id/ll_main"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+            <!--TableHeader-->
+            <TableLayout
+                android:layout_width="match_parent"
+                android:layout_height="30dp"
+                android:gravity="center"
+                android:stretchColumns="*"
+                android:background="@drawable/tab_header_bg">
+                <TableRow
+                    android:gravity="center_horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@color/color_tabHeader">
+                    <TextView android:text="구매"
+                        android:id="@+id/buyitemyn"
+                        android:layout_width="0dp"
+                        android:gravity="center"
+                        android:textColor= "@color/color_tabHeaderText"
+                        android:textStyle="bold"
+                        />
+                    <TextView android:text="장소"
+                        android:id="@+id/buyitemplace"
+                        android:layout_width="wrap_content"
+                        android:gravity="center"
+                        android:textColor= "@color/color_tabHeaderText"
+                        android:textStyle="bold"
+                        />
+                    <TextView android:text="물품명"
+                        android:id="@+id/buyitemname"
+                        android:layout_width="wrap_content"
+                        android:gravity="center"
+                        android:textColor= "@color/color_tabHeaderText"
+                        android:textStyle="bold"
+                        />
+                    <TextView android:text="가격"
+                        android:id="@+id/buyitemprice"
+                        android:layout_width="wrap_content"
+                        android:gravity="center"
+                        android:layout_weight="1"
+                        android:textColor= "@color/color_tabHeaderText"
+                        android:textStyle="bold"/>
+                    <TextView
+                        android:text="삭제"
+                        android:id="@+id/buyitemdelbt"
+                        android:layout_width="0dp"
+                        android:gravity="center"
+                        android:textColor= "@color/color_tabHeaderText"
+                        android:textStyle="bold"/>
+                </TableRow>
+            </TableLayout>
+            <!--TableBody-->
+            <ScrollView
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:layout_marginRight="10dp"
+                >
+                <TableLayout
+                    android:id="@+id/buylisttable"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:stretchColumns="1,2,3"
+                    >
+                </TableLayout>
+            </ScrollView>
+        </LinearLayout>
+    </LinearLayout>
+
+    <LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="40dp"
+    android:gravity="right"
+    android:layout_marginRight="10dp"
+    android:layout_marginBottom="5dp">
+
+    <Button android:layout_height="match_parent"
+        android:layout_width="wrap_content"
+        android:text="CANCEL"
+        android:id="@+id/buylistcancelbt"
+        android:theme="@style/MyButton"
+        style="@style/Widget.AppCompat.Button.Borderless"
+        android:textStyle="bold"/>
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:text="SAVE"
+        android:id="@+id/buylistsavebt"
+        android:theme="@style/MyButton"
+        style="@style/Widget.AppCompat.Button.Borderless"
+        android:textStyle="bold"/>
+    </LinearLayout>
+</LinearLayout>

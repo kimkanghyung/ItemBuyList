@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="horizontal" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingTop="3dp"
+    android:paddingBottom="3dp"
+    android:paddingRight="5dp">
+    <!--좌측(날짜/장소/금액)-->
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_gravity="left"
+        android:layout_weight="1"
+        android:orientation="vertical">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+            <!--날짜-->
+            <TextView
+                android:id="@+id/custom_list_req_dt"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="5dp"
+                android:textColor="@color/colorPrimaryDark"
+                android:textStyle="bold">
+            </TextView>
+            <!--장소-->
+            <TextView
+                android:id="@+id/custom_list_place"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/colorPrimaryDark"
+                android:textStyle="bold">
+            </TextView>
+        </LinearLayout>
+        <!--금액-->
+        <TextView
+            android:id="@+id/custom_list_total_sum"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/colorPrimary"
+            android:textSize="15sp">
+        </TextView>
+    </LinearLayout>
+    <!--우측버튼(영수증/삭제)-->
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_gravity="right"
+        android:orientation="horizontal">
+        <Button
+            android:id="@+id/receipt_bt"
+            android:layout_width="80dp"
+            android:layout_height="match_parent"
+            android:text="영수증"
+            android:textColor="@color/white"
+            />
+        <Button
+            android:id="@+id/delete_bt"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:background="@drawable/ic_delete_forever_black_24dp"
+            />
+<!--
+        <Button
+            android:id="@+id/delete_bt"
+            android:layout_width="60dp"
+            android:layout_height="match_parent"
+            android:text="삭제"
+            android:textColor="@color/white"/>
+-->
+    </LinearLayout>
+
+</LinearLayout>
