@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:background="?android:attr/colorBackground"
+    android:layout_height="match_parent">
+
+    <FrameLayout
+        android:id="@+id/content"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1">
+        <!--INFO 전체영역-->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:background="#ffffff">
+            <!--시그니쳐로고부-->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:padding="35dp"
+                android:layout_marginTop="20dp">
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/bytr_rgntr_signature"/>
+            </LinearLayout>
+            <!--앱정보부-->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:orientation="vertical">
+                <!--앱 명칭-->
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:layout_gravity="center"
+                    android:gravity="center_horizontal"
+                    android:text="오늘은모사지?"
+                    android:textSize="25sp"
+                    android:textStyle="bold"
+                    android:textColor="@color/colorInfoTitleTxt"/>
+                <!--앱 버전-->
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="30dp"
+                    android:layout_gravity="center"
+                    android:gravity="center_horizontal"
+                    android:id="@+id/deviceversion"
+                    android:text="Ver."
+                    android:textSize="20sp"
+                    android:textStyle="bold"
+                    android:textColor="@color/colorInfoVerTxt"/>
+                <!--앱 메일주소-->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:gravity="center_vertical"
+                        android:layout_gravity="center"
+                        android:orientation="vertical">
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:id="@+id/emailaddr"
+                            android:layout_height="30dp"
+                            android:layout_gravity="center"
+                            android:gravity="center_vertical"
+                            android:paddingRight="10dp"
+                            android:paddingLeft="10dp"
+                            android:text="Contact Us : hardkkh1023@gmail.com"
+                            android:textSize="16sp"
+                            android:textColor="@color/colorInfoMailTxt"
+                            android:background="@drawable/bg_info_mail"/>
+                    </LinearLayout>
+                </LinearLayout>
+            </LinearLayout>
+        </LinearLayout>
+    </FrameLayout>
+
+
+</LinearLayout>

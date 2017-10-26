@@ -3,6 +3,7 @@ package com.happiness.itembuylist;
 import android.app.DatePickerDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
@@ -13,6 +14,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AlertDialog;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -119,8 +121,48 @@ public class receiptListfragment  extends Fragment {
 
         custom_list = (ListView) view.findViewById(R.id.receiplistview);
         settingListView(1);
+        view.setFocusableInTouchMode(true);
+        view.requestFocus();
+        view.setOnKeyListener(new View.OnKeyListener() {
+            @Override
+            public boolean onKey(View v, int keyCode, KeyEvent event) {
+                if (event.getAction()!=KeyEvent.ACTION_DOWN)
+                    return true;
+
+                if( keyCode == KeyEvent.KEYCODE_BACK ) {
+                    AlertDialog.Builder alert_confirm = new AlertDialog.Builder(getActivity());
+                    alert_confirm.setMessage("종료하시겠습니까?").setCancelable(false).setPositiveButton("확인",
+                            new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    // 'YES'
+                                    // Intent intent = new Intent(getActivity(),MainActivity.class);
+                                    //  intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP| Intent.FLAG_ACTIVITY_SINGLE_TOP);
+                                    //  intent.putExtra("finishstatus", true);
+                                    //  startActivity(intent);
+                                    getActivity().finish();
+                                }
+                            }).setNegativeButton("취소",
+                            new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    // 'No'
+                                    // return;
+                                }
+                            });
+                    AlertDialog alert = alert_confirm.create();
+                    alert.show();
+
+                    return true;
+                } else {
+                    return true;
+                }
+            }
+        });
         return view;
     }
+
+
 
     private List getFavoritPlaceeList(){
 

@@ -20,6 +20,7 @@ import android.provider.MediaStore;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AlertDialog;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.SurfaceHolder;
@@ -145,7 +146,7 @@ public class receiptCamera extends Fragment implements AdapterView.OnItemClickLi
         dateedit.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View view, MotionEvent motionEvent) {
-                if(motionEvent.getAction() == MotionEvent.ACTION_UP || motionEvent.getAction() == MotionEvent.ACTION_DOWN)
+                if(motionEvent.getAction() == MotionEvent.ACTION_UP)
                 new DatePickerDialog(getContext(), dateSetListener, year, month, day).show();
                 return false;
             }
@@ -218,6 +219,45 @@ public class receiptCamera extends Fragment implements AdapterView.OnItemClickLi
                     }
                 }
         );
+
+        view.setFocusableInTouchMode(true);
+        view.requestFocus();
+        view.setOnKeyListener(new View.OnKeyListener() {
+            @Override
+            public boolean onKey(View v, int keyCode, KeyEvent event) {
+                if (event.getAction()!=KeyEvent.ACTION_DOWN)
+                    return true;
+
+                if( keyCode == KeyEvent.KEYCODE_BACK ) {
+                    AlertDialog.Builder alert_confirm = new AlertDialog.Builder(getActivity());
+                    alert_confirm.setMessage("종료하시겠습니까?").setCancelable(false).setPositiveButton("확인",
+                            new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    // 'YES'
+                                    // Intent intent = new Intent(getActivity(),MainActivity.class);
+                                    //  intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP| Intent.FLAG_ACTIVITY_SINGLE_TOP);
+                                    //  intent.putExtra("finishstatus", true);
+                                    //  startActivity(intent);
+                                    getActivity().finish();
+                                }
+                            }).setNegativeButton("취소",
+                            new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    // 'No'
+                                    // return;
+                                }
+                            });
+                    AlertDialog alert = alert_confirm.create();
+                    alert.show();
+
+                    return true;
+                } else {
+                    return true;
+                }
+            }
+        });
         return view;
     }
 

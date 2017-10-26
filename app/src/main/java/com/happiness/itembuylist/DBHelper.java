@@ -593,4 +593,35 @@ public class DBHelper extends SQLiteOpenHelper {
         db.close();
     }
 
+    public List<searchItemList> selectSearchItemtList(String Item_nm)
+    {
+        StringBuffer sb = new StringBuffer();
+        SQLiteDatabase db = getReadableDatabase();
+        List<searchItemList> li = new ArrayList<searchItemList>();
+        if(Item_nm.equals("")){
+            return li;
+        }
+        sb.append(" SELECT REQ_DT,ITEM_NM,  BUY_PLACE, ITEM_PRE_PRICE FROM BUY_LIST ");
+        sb.append(" WHERE '1'='1' ");
+        sb.append(" AND ITEM_NM like " + "'%" + Item_nm + "%'");
+
+        Log.e("selectPlace SQL", sb.toString());
+        Cursor cursor = db.rawQuery(sb.toString(), null);
+
+
+        String tmp = null;
+        while( cursor.moveToNext() )
+        {
+            Log.w("List", cursor.getString(1));
+            searchItemList mbl = new searchItemList();
+            mbl.setReq_dt(cursor.getString(0));
+            mbl.setItem_nm(cursor.getString(1));
+            mbl.setBuypalce(cursor.getString(2));
+            mbl.setPre_price(Integer.parseInt(cursor.getString(3)));
+
+            li.add(mbl);
+        }
+        return li;
+    }
+
 }

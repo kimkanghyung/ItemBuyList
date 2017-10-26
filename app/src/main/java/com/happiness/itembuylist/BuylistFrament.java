@@ -2,6 +2,7 @@ package com.happiness.itembuylist;
 
 import android.app.DatePickerDialog;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
@@ -27,6 +28,7 @@ import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ScrollView;
 import android.widget.Spinner;
 import android.widget.TableLayout;
 import android.widget.TableRow;
@@ -73,6 +75,8 @@ public class BuylistFrament extends Fragment implements View.OnClickListener {
     int month ;
     int day;
     TextView edittxt;
+
+    ScrollView scrollviewbody;
 
     public BuylistFrament(){
 
@@ -190,11 +194,51 @@ public class BuylistFrament extends Fragment implements View.OnClickListener {
         tmp3.measure(0,0);
         dellength = tmp3.getMeasuredWidth();
         Log.e("dellength","dellength = " + dellength);
+        scrollviewbody = (ScrollView)view.findViewById(R.id.scrollviewbody);
 
         init();
         getBuyList();
 
         gubun = true;
+
+        view.setFocusableInTouchMode(true);
+        view.requestFocus();
+        view.setOnKeyListener(new View.OnKeyListener() {
+            @Override
+            public boolean onKey(View v, int keyCode, KeyEvent event) {
+                if (event.getAction()!=KeyEvent.ACTION_DOWN)
+                    return true;
+
+                if( keyCode == KeyEvent.KEYCODE_BACK ) {
+                    AlertDialog.Builder alert_confirm = new AlertDialog.Builder(getActivity());
+                    alert_confirm.setMessage("종료하시겠습니까?").setCancelable(false).setPositiveButton("확인",
+                            new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    // 'YES'
+                                    // Intent intent = new Intent(getActivity(),MainActivity.class);
+                                    //  intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP| Intent.FLAG_ACTIVITY_SINGLE_TOP);
+                                    //  intent.putExtra("finishstatus", true);
+                                    //  startActivity(intent);
+                                    getActivity().finish();
+                                }
+                            }).setNegativeButton("취소",
+                            new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    // 'No'
+                                    // return;
+                                }
+                            });
+                    AlertDialog alert = alert_confirm.create();
+                    alert.show();
+
+                    return true;
+                } else {
+                    return true;
+                }
+            }
+        });
 
 
         return view;
@@ -305,6 +349,7 @@ public class BuylistFrament extends Fragment implements View.OnClickListener {
                 Tmp_place =spinnerplcae.getSelectedItem().toString();
                 setterTablelayout(Tmp_place,"",0);
             }
+            scrollToEnd();
 
 
         }
@@ -474,6 +519,8 @@ public class BuylistFrament extends Fragment implements View.OnClickListener {
             }
         }
 
+        sumBuyPrice();
+
     }
 
     private void setterTablelayout(String place ,String item_nm,int pirce){
@@ -574,33 +621,38 @@ public class BuylistFrament extends Fragment implements View.OnClickListener {
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
 
-                if (!s.toString().equals(strAmount)) { // StackOverflow를 막기위해,
+                if(s.toString().equals("")){
+                    sumBuyPrice();
+                }else {
+                    if (!s.toString().equals(strAmount)) { // StackOverflow를 막기위해,
 
-                    if(strAmount.length() <= 9){
-                        strAmount = Comma_won(s.toString().replace(",", ""));
-                        tv2.setText(strAmount);
-                        Editable e = tv2.getText();
-                        Selection.setSelection(e, strAmount.length());
-                        sumBuyPrice();
+                        if(strAmount.length() <= 9){
+                            strAmount = Comma_won(s.toString().replace(",", ""));
+                            tv2.setText(strAmount);
+                            Editable e = tv2.getText();
+                            Selection.setSelection(e, strAmount.length());
+                            sumBuyPrice();
+                        }
+                        else if(strAmount.length() > 9){
+
+                            AlertDialog.Builder alert = new AlertDialog.Builder(getActivity());
+                            alert.setPositiveButton("확인", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    dialog.dismiss();     //닫기
+                                }
+                            });
+                            alert.setMessage("숫자가 너무 큽니다.");
+                            alert.show();
+                            tv2.setText(strAmount);
+                            return;
+
+                        }
+
+
                     }
-                    else if(strAmount.length() > 9){
-
-                        AlertDialog.Builder alert = new AlertDialog.Builder(getActivity());
-                        alert.setPositiveButton("확인", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                                dialog.dismiss();     //닫기
-                            }
-                        });
-                        alert.setMessage("숫자가 너무 큽니다.");
-                        alert.show();
-                        tv2.setText(strAmount);
-                        return;
-
-                    }
-
-
                 }
+
 
             }
         });
@@ -649,6 +701,7 @@ public class BuylistFrament extends Fragment implements View.OnClickListener {
             @Override
             public void onClick(View view) {
                 tbl.removeView(row);
+                sumBuyPrice();
             }
         });
 
@@ -701,6 +754,17 @@ public class BuylistFrament extends Fragment implements View.OnClickListener {
         Log.e("합계 = ", String.valueOf(sumprice) );
 
         edittxt.setText(String.valueOf(Comma_won(String.valueOf(sumprice))));
+    }
+
+    public void scrollToEnd(){
+        scrollviewbody.post(new Runnable() {
+            @Override
+            public void run() {
+                scrollviewbody.fullScroll(View.FOCUS_DOWN);
+               // scrollviewbody.focus
+              //  scrollviewbody.scrollTo(0, scrollviewbody.getBottom());
+            }
+        });
     }
 
 }

@@ -6,14 +6,14 @@
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
-        <item name="android:textSize">9pt</item>
+        <item name="android:textSize">18sp</item>
         <item name="colorControlHighlight">@color/pink</item>
         <item name="colorButtonNormal">@color/colorPrimary</item>
     </style>
     <style name="MyButton" parent="Theme.AppCompat.Light">
-        <item name="colorControlHighlight">@color/pink</item>
+        <item name="colorControlHighlight">@color/color_btnHighlight</item>
         <item name="android:textColor">@color/color_btnText</item>
-        <item name="android:textSize">7pt</item>
+        <item name="android:textSize">14sp</item>
         <item name="android:paddingTop">0dp</item>
         <item name="android:paddingBottom">0dp</item>
     </style>

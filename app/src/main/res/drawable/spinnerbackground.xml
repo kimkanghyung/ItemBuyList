@@ -4,8 +4,8 @@
         <layer-list>
             <item>
                 <shape android:shape="rectangle">
-                    <solid android:color="#f5f5f5" /> <!-- 배경 -->
-                    <stroke android:width="1dp" android:color="#e9e7e7" /> <!-- 외각선 -->
+                    <solid android:color="@color/color_tabBodyBg" /> <!-- 배경 -->
+                    <stroke android:width="1dp" android:color="@color/color_e9e7e7" /> <!-- 외각선 -->
                     <corners android:radius="0dp" />
                     <padding android:bottom="1dp" android:left="3dp" android:right="3dp" android:top="1dp" />
                 </shape>

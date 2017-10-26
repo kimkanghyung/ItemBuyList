@@ -23,10 +23,6 @@
             android:id="@+id/favoritebuylist"
             android:icon="@drawable/ic_stars_black_24dp"
             android:title="즐겨찾기" />
-        <item
-            android:id="@+id/boughtlistgraph"
-            android:icon="@drawable/ic_insert_chart_black_24dp"
-            android:title="지출그래프" />
     </group>
 
     <item android:title="Contact Us">

@@ -5,11 +5,13 @@
     <uses-permission android:name="android.permission.CAMERA"/>
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permisson android:name="android.permission.READ_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
 
 
     <application
         android:allowBackup="true"
-        android:icon="@drawable/shopping_cart_purple"
+        android:icon="@drawable/bytr_app_icon2"
         android:roundIcon="@color/primaryLightColor"
         android:label="@string/title_name"
         android:supportsRtl="true"
@@ -18,6 +20,7 @@
             android:name=".MainActivity"
             android:label="@string/title_name"
             android:theme="@style/AppTheme.NoActionBar"
+            android:windowSoftInputMode="adjustResize"
             android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

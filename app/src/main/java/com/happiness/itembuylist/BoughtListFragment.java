@@ -1,7 +1,9 @@
 package com.happiness.itembuylist;
 
+import android.app.ActionBar;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.Point;
 import android.graphics.drawable.Drawable;
@@ -35,6 +37,7 @@ import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.PopupWindow;
+import android.widget.ScrollView;
 import android.widget.Spinner;
 import android.widget.TableLayout;
 import android.widget.TableRow;
@@ -81,6 +84,7 @@ public class BoughtListFragment extends Fragment{
     Spinner spinner;
     int sumprice;
     Button addBt;
+    ScrollView scrollviewbody;
 
     // 요일별도
     private GridView dayListView;
@@ -101,6 +105,7 @@ public class BoughtListFragment extends Fragment{
         gridView = (GridView)view.findViewById(R.id.gridview);
 
         dayListView = (GridView)view.findViewById(R.id.daylistview);
+
 
 
 
@@ -176,6 +181,47 @@ public class BoughtListFragment extends Fragment{
 
             }
         });
+
+        view.setFocusableInTouchMode(true);
+        view.requestFocus();
+        view.setOnKeyListener(new View.OnKeyListener() {
+            @Override
+            public boolean onKey(View v, int keyCode, KeyEvent event) {
+                if (event.getAction()!=KeyEvent.ACTION_DOWN)
+                    return true;
+
+                if( keyCode == KeyEvent.KEYCODE_BACK ) {
+                    AlertDialog.Builder alert_confirm = new AlertDialog.Builder(getActivity());
+                    alert_confirm.setMessage("종료하시겠습니까?").setCancelable(false).setPositiveButton("확인",
+                            new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    // 'YES'
+                                    // Intent intent = new Intent(getActivity(),MainActivity.class);
+                                    //  intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP| Intent.FLAG_ACTIVITY_SINGLE_TOP);
+                                    //  intent.putExtra("finishstatus", true);
+                                    //  startActivity(intent);
+                                    getActivity().finish();
+                                }
+                            }).setNegativeButton("취소",
+                            new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    // 'No'
+                                    // return;
+                                }
+                            });
+                    AlertDialog alert = alert_confirm.create();
+                    alert.show();
+
+                    return true;
+                } else {
+                    return true;
+                }
+            }
+        });
+
+
 
 
         return view;
@@ -334,7 +380,8 @@ public class BoughtListFragment extends Fragment{
 
        poupView = getActivity().getLayoutInflater().inflate(R.layout.popup_boughtlist,null);
 
-        mpopupWindow = new PopupWindow(poupView,mWidthPixels - 100 , mHeightPixels - 500,true);
+
+        mpopupWindow = new PopupWindow(poupView, ActionBar.LayoutParams.MATCH_PARENT, ActionBar.LayoutParams.MATCH_PARENT, true);
 
         //mpopupWindow.setFocusable(true);
         mpopupWindow.setTouchInterceptor(new View.OnTouchListener()
@@ -355,15 +402,24 @@ public class BoughtListFragment extends Fragment{
         mpopupWindow.setOutsideTouchable(false);
         mpopupWindow.setTouchable(true);
         mpopupWindow.setFocusable(true);
+      //  mpopupWindow.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
+    //   mpopupWindow.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);
+     //   mpopupWindow.setInputMethodMode(PopupWindow.INPUT_METHOD_NEEDED);
+      //  mpopupWindow.setClippingEnabled(false);
+
 
 
         new Handler().postDelayed(new Runnable(){
 
             public void run() {
+               // mpopupWindow.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);
+                mpopupWindow.setSoftInputMode(PopupWindow.INPUT_METHOD_NEEDED);
+                mpopupWindow.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);
                 mpopupWindow.showAtLocation(poupView, Gravity.CENTER, 0, 0);
             }
 
         }, 100L);
+
 
         spinner = (Spinner)poupView.findViewById(R.id.spinner);
         ArrayAdapter<String> aa = new ArrayAdapter<String>(getActivity(),android.R.layout.simple_spinner_item,getFavoriteList());
@@ -477,8 +533,11 @@ public class BoughtListFragment extends Fragment{
                     }
 
                 }
+                scrollToEnd();
             }
         });
+
+        scrollviewbody = (ScrollView)poupView.findViewById(R.id.scrollviewbody);;
 
         Button savebt = (Button)poupView.findViewById(R.id.buylistsavebt);
         savebt.setOnClickListener(new View.OnClickListener() {
@@ -585,7 +644,7 @@ public class BoughtListFragment extends Fragment{
         tv2.setHint("가격입력");
         tv2.setGravity(Gravity.CENTER);
         if(pirce != 0) {
-            tv2.setText(String.valueOf(pirce));
+            tv2.setText(Comma_won(String.valueOf(pirce)));
         }else {
             tv2.setText("");
         }
@@ -601,32 +660,36 @@ public class BoughtListFragment extends Fragment{
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
 
-                if (!s.toString().equals(strAmount)) { // StackOverflow를 막기위해,
+                if(s.toString().equals("")){
+                    sumBuyPrice();
+                }else {
+                    if (!s.toString().equals(strAmount)) { // StackOverflow를 막기위해,
 
-                    if(strAmount.length() <= 9){
-                        strAmount = Comma_won(s.toString().replace(",", ""));
-                        tv2.setText(strAmount);
-                        Editable e = tv2.getText();
-                        Selection.setSelection(e, strAmount.length());
-                        sumBuyPrice();
+                        if(strAmount.length() <= 9){
+                            strAmount = Comma_won(s.toString().replace(",", ""));
+                            tv2.setText(strAmount);
+                            Editable e = tv2.getText();
+                            Selection.setSelection(e, strAmount.length());
+                            sumBuyPrice();
+                        }
+                        else if(strAmount.length() > 9){
+
+                            AlertDialog.Builder alert = new AlertDialog.Builder(getActivity());
+                            alert.setPositiveButton("확인", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    dialog.dismiss();     //닫기
+                                }
+                            });
+                            alert.setMessage("숫자가 너무 큽니다.");
+                            alert.show();
+                            tv2.setText(strAmount);
+                            return;
+
+                        }
+
+
                     }
-                    else if(strAmount.length() > 9){
-
-                        AlertDialog.Builder alert = new AlertDialog.Builder(getActivity());
-                        alert.setPositiveButton("확인", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                                dialog.dismiss();     //닫기
-                            }
-                        });
-                        alert.setMessage("숫자가 너무 큽니다.");
-                        alert.show();
-                        tv2.setText(strAmount);
-                        return;
-
-                    }
-
-
                 }
 
             }
@@ -668,11 +731,23 @@ public class BoughtListFragment extends Fragment{
             @Override
             public void onClick(View view) {
                 tbl.removeView(row);
+                sumBuyPrice();
             }
         });
 
         tbl.addView(row, new TableLayout.LayoutParams(LinearLayout.LayoutParams.FILL_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT));
        // spinner.setSelection(0);
+    }
+
+    public void scrollToEnd(){
+        scrollviewbody.post(new Runnable() {
+            @Override
+            public void run() {
+                scrollviewbody.fullScroll(View.FOCUS_DOWN);
+                // scrollviewbody.focus
+                //  scrollviewbody.scrollTo(0, scrollviewbody.getBottom());
+            }
+        });
     }
 
     public String Comma_won(String price) {
@@ -980,9 +1055,9 @@ public class BoughtListFragment extends Fragment{
                 }
 
                 if(position % 7 == 0){
-                    holder.tvItemGridView.setTextColor(Color.rgb(142,0,56));
+                    holder.tvItemGridView.setTextColor(Color.rgb(211,77,12));
                 }else if(position % 7 == 6){
-                    holder.tvItemGridView.setTextColor(Color.rgb(216,27,96));
+                    holder.tvItemGridView.setTextColor(Color.rgb(254,100,1));
                 }
 
                 if(tmpStirng.size()>0 && Tmpdate != null){

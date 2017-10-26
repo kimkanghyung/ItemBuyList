@@ -11,6 +11,7 @@ import android.support.v7.app.AlertDialog;
 import android.util.Log;
 import android.util.TypedValue;
 import android.view.Gravity;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,6 +22,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
+import android.widget.ScrollView;
 import android.widget.Spinner;
 import android.widget.TableLayout;
 import android.widget.TableRow;
@@ -49,7 +51,10 @@ public class FavoriteItemFragment extends Fragment implements View.OnClickListen
     List addlist;
     DBHelper dbHelper ;
     RadioGroup rg;
+    ScrollView scrollviewbody;
 
+    RadioButton bg2;
+    RadioButton bg1;
 
 
     //View mainview
@@ -82,10 +87,14 @@ public class FavoriteItemFragment extends Fragment implements View.OnClickListen
         //dbHelper = new DBHelper(getActivity().getApplicationContext(), "Itemlist.db", null, 1);
         //
         addlist = new ArrayList();
+        scrollviewbody = (ScrollView)mainview.findViewById(R.id.scrollviewbody);
 
-        rg = (RadioGroup) mainview.findViewById(R.id.radiorg) ;
+        rg = (RadioGroup) mainview.findViewById(R.id.radiorg);
 
-        RadioButton bg2 = (RadioButton)mainview.findViewById(R.id.option2);
+
+
+
+        bg2 = (RadioButton)mainview.findViewById(R.id.option2);
         bg2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -95,7 +104,7 @@ public class FavoriteItemFragment extends Fragment implements View.OnClickListen
             }
         });
 
-        RadioButton bg1 = (RadioButton)mainview.findViewById(R.id.option1);
+        bg1 = (RadioButton)mainview.findViewById(R.id.option1);
         bg1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -104,14 +113,63 @@ public class FavoriteItemFragment extends Fragment implements View.OnClickListen
             }
         });
 
-
+        bg1.setChecked(true);
 
         TextView tmp3 = (TextView)mainview.findViewById(R.id.buyitemdelbt);
         tmp3.measure(0,0);
         dellength = tmp3.getMeasuredWidth();
-        getFavoriteList();
+        if(rg.getCheckedRadioButtonId() == R.id.option2){
+            getFavoriteList();
+        }else if(rg.getCheckedRadioButtonId() == R.id.option1){
+            getFavoritePlaceList();
+        }
+
+        mainview.setFocusableInTouchMode(true);
+        mainview.requestFocus();
+        mainview.setOnKeyListener(new View.OnKeyListener() {
+            @Override
+            public boolean onKey(View v, int keyCode, KeyEvent event) {
+                if (event.getAction()!=KeyEvent.ACTION_DOWN)
+                    return true;
+
+                if( keyCode == KeyEvent.KEYCODE_BACK ) {
+                    AlertDialog.Builder alert_confirm = new AlertDialog.Builder(getActivity());
+                    alert_confirm.setMessage("종료하시겠습니까?").setCancelable(false).setPositiveButton("확인",
+                            new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    // 'YES'
+                                   // Intent intent = new Intent(getActivity(),MainActivity.class);
+                                  //  intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP| Intent.FLAG_ACTIVITY_SINGLE_TOP);
+                                  //  intent.putExtra("finishstatus", true);
+                                  //  startActivity(intent);
+                                    getActivity().finish();
+                                }
+                            }).setNegativeButton("취소",
+                            new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    // 'No'
+                                   // return;
+                                }
+                            });
+                    AlertDialog alert = alert_confirm.create();
+                    alert.show();
+
+                    return true;
+                } else {
+                    return true;
+                }
+            }
+        });
 
         return mainview;
+    }
+
+    @Override
+    public void onResume() {
+        bg1.setChecked(true);
+        super.onResume();
     }
 
   private List getfavoriteitemlist(){
@@ -127,11 +185,13 @@ public class FavoriteItemFragment extends Fragment implements View.OnClickListen
         if(view.getId() == R.id.buylistaddbt){
 
             setterTablelayout("");
+            scrollToEnd();
         }
         else if(view.getId() == R.id.buylistsavebt){
             Date d = new Date();
 
             String s = d.toString();
+            List comparetmplist = new ArrayList<>();
 
             SimpleDateFormat sdf = new SimpleDateFormat("yyyy");
             SimpleDateFormat sdf2 = new SimpleDateFormat("MM");
@@ -165,7 +225,24 @@ public class FavoriteItemFragment extends Fragment implements View.OnClickListen
                                     alert.show();
                                     return;
                                 }
+                                if(!comparetmplist.contains(title)){
+                                    comparetmplist.add(title);
+                                }else {
+                                    AlertDialog.Builder alert = new AlertDialog.Builder(getActivity());
+                                    alert.setPositiveButton("확인", new DialogInterface.OnClickListener() {
+                                        @Override
+                                        public void onClick(DialogInterface dialog, int which) {
+                                            dialog.dismiss();     //닫기
+                                        }
+                                    });
+                                    alert.setMessage("동일한 목록은 입력 안됩니다.");
+                                    alert.show();
+                                    comparetmplist.clear();
+                                    return;
+                                }
                             }
+//                            Log.e("title" , title);
+
                             FavoriteItem fi = new FavoriteItem();
                             if(x == 0 ){
                                 fi.setItem_nm(title);
@@ -219,7 +296,23 @@ public class FavoriteItemFragment extends Fragment implements View.OnClickListen
                                     return;
                                 }
                                 li.add(title);
+                                if(!comparetmplist.contains(title)){
+                                    comparetmplist.add(title);
+                                }else {
+                                    AlertDialog.Builder alert = new AlertDialog.Builder(getActivity());
+                                    alert.setPositiveButton("확인", new DialogInterface.OnClickListener() {
+                                        @Override
+                                        public void onClick(DialogInterface dialog, int which) {
+                                            dialog.dismiss();     //닫기
+                                        }
+                                    });
+                                    alert.setMessage("동일한 목록은 입력 안됩니다.");
+                                    alert.show();
+                                    comparetmplist.clear();
+                                    return;
+                                }
                             }
+
 
                         }
 
@@ -241,6 +334,7 @@ public class FavoriteItemFragment extends Fragment implements View.OnClickListen
                 }
 
             }
+            comparetmplist.clear();
 
 
         } else if (view.getId() == R.id.buylistcancelbt) {
@@ -327,6 +421,17 @@ public class FavoriteItemFragment extends Fragment implements View.OnClickListen
 
         tbl.addView(row, new TableLayout.LayoutParams(LinearLayout.LayoutParams.FILL_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT));
 
+    }
+
+    public void scrollToEnd(){
+        scrollviewbody.post(new Runnable() {
+            @Override
+            public void run() {
+                scrollviewbody.fullScroll(View.FOCUS_DOWN);
+                // scrollviewbody.focus
+                //  scrollviewbody.scrollTo(0, scrollviewbody.getBottom());
+            }
+        });
     }
 
 }

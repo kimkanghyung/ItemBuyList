@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#880e4f</color>
+    <color name="colorPrimary">#1b2b45</color>
     <color name="colorPrimaryLight">#ffffff</color>
-    <color name="colorPrimaryDark">#4f4f4f</color>
-    <color name="colorAccent">#c2185b</color>
+    <color name="colorPrimaryDark">#3f505c</color>
+    <color name="colorAccent">#ef571b</color>
     <color name="color_000000">#000000</color>
     <color name="color_e9e7e7">#e9e7e7</color>
     <color name="color_eeeeee">#eeeeee</color>
@@ -14,16 +14,23 @@
     <color name="color_tabHeader">#ffdcbb</color>
     <color name="color_tabHeaderText">#1f1f1f</color>
     <color name="color_tabBodyBg">#efefef</color>
+    <color name="color_tabBodyBorder">#b8bec9</color>
     <color name="color_calHeaderBg">#ffdcbb</color>
-    <color name="color_calHeaderText">#450727</color>
-    <color name="color_calHeaderNav">#51092f</color>
-    <color name="color_popHeaderBg">#880e4f</color>
+    <color name="color_calHeaderText">#1b2b45</color>
+    <color name="color_calHeaderNav">#1b2b45</color>
+    <color name="color_popHeaderBg">#1b2b45</color>
     <color name="color_popHeaderText">#ffffff</color>
-    <color name="color_btnText">#c2185b</color>
+    <color name="color_btnText">#1b2b45</color>
+    <color name="color_btnHighlight">#b8bec9</color>
+    <color name="colorSumAmtTxt">#d34d0c</color>
+    <color name="colorInfoVerTxt">#3495a4</color>
+    <color name="colorInfoMailTxt">#595959</color>
+    <color name="colorInfoMailBg">#ececec</color>
+    <color name="colorInfoTitleTxt">#404040</color>
 
 
     <!--#20171001-->
     <color name="primaryColor">#c2185b</color>
-    <color name="primaryLightColor">#880e4f</color>
+    <color name="primaryLightColor">#1b2b45</color>
     <color name="primaryDarkColor">#8c0032</color>
 </resources>
